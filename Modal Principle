@@ -1,0 +1,48 @@
+// This function will be used to create Modal
+function ModalCreator(dialogDiv) {
+
+	dialogDiv.dialog({
+		close : function(event, ui) {
+			$('#overlay').remove();
+			// you must from parent remove curren nodeElement, otherweise it will only set display : none, it will not
+			// remove it!!
+			this.parentElement.parentElement.removeChild(this.parentElement);
+		},
+		closeOnEscape : true
+
+	});
+
+}
+
+function changeInputDomElementValue(el) {
+	el.previousSibling.checked = !el.previousSibling.checked;
+}
+
+function search_artikel_type() {
+	// Create overlay
+	var overlay = $('<div id="overlay"></div>').addClass('ui-widget-overlay');
+
+	$('body').append(overlay);
+
+	var dialogDiv = $("<div class='selectArtikelTypeDialog' id='selectArtikelType' style='display : block'></div>");
+
+	dialogDiv.html("<form action='category_list.php' method='post'>"  +
+	               "<div class='selectArtikelTypeCheckbox'><input type='checkbox' value='1' name='type.eigenproduktion'/><span onclick='changeInputDomElementValue(this);' style='cursor: pointer'>&nbsp;Eigenprodukition</span></div>" +
+			       "<div class='selectArtikelTypeCheckbox'><input type='checkbox' value='2' name='type.zukaufteil'/><span onclick='changeInputDomElementValue(this);' style='cursor: pointer'>&nbsp;Zukaufteil</span></div>" +
+	               "<div class='selectArtikelTypeCheckbox'><input type='checkbox' value='3' name='type.pickup'/><span onclick='changeInputDomElementValue(this);' style='cursor: pointer'>&nbsp;Pickup</span></div><br />" +
+	               "<input type='submit' name='searchArtikelCatogorie' />" +
+	               "</form>");
+
+	// Create Modal
+	ModalCreator(dialogDiv);
+}
+
+$(function(){
+
+	jQuery('body').on('click', '#overlay', function() {
+		$('.selectArtikelTypeDialog').remove();
+		this.remove();
+	});
+
+
+});

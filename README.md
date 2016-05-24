@@ -1,2 +1,3 @@
-# Lipowsky
-For quick references!
+# javascript model implementation
+
+just for training
